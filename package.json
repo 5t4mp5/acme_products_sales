@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "DATABASE_URL=postgres://localhost/acme_products_sales node ./server/index.js"
+    "start:dev": "DATABASE_URL=postgres://localhost/acme_products_sales nodemon ./server/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
+    "nodemon": "^1.18.10",
     "pg": "^7.9.0",
     "sequelize": "^5.1.0"
   }
