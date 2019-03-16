@@ -3,17 +3,39 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "babel": {
+    "presets": [
+      "react",
+      "stage-2"
+    ]
+  },
+
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "DATABASE_URL=postgres://localhost/acme_products_sales nodemon ./server/index.js"
+    "webpack": "webpack",
+    "webpack:dev": "npm run webpack -- --mode=development --watch",
+    "start:dev": "npm run webpack:dev & DATABASE_URL=postgres://localhost/acme_products_sales nodemon ./server/index.js --ignore client/ --ignore public/",
+    "start": "node ./server/index.js",
+    "heroku-postbuild": "webpack -p"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
     "express": "^4.16.4",
     "nodemon": "^1.18.10",
+    "path": "^0.12.7",
     "pg": "^7.9.0",
-    "sequelize": "^5.1.0"
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "react-router-dom": "^4.3.1",
+    "sequelize": "^5.1.0",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
   }
 }
