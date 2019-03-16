@@ -169,6 +169,10 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
               path: "/Products",
               render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Products__WEBPACK_IMPORTED_MODULE_5__["default"], { products: this.state.products })
             }),
+            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+              path: "/Sales",
+              render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Products__WEBPACK_IMPORTED_MODULE_5__["default"], { products: this.state.products.filter(product => product.onSale) })
+            }),
             react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], { to: "/Home" })
           )
         )
@@ -239,11 +243,29 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const Product = ({ product }) => {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        "li",
-        { className: "list-group-item" },
-        product.name
-    );
+  const { name, price, salePrice, onSale, availability } = product;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+    "li",
+    { className: "list-group-item" },
+    name,
+    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null),
+    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+      "span",
+      { style: onSale ? { textDecoration: "line-through" } : {} },
+      "$",
+      price
+    ),
+    onSale ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+      "div",
+      { style: { margin: { bottom: "5px" } } },
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        "span",
+        { className: "badge badge-success" },
+        "$",
+        salePrice
+      )
+    ) : ""
+  );
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Product);
@@ -26106,7 +26128,7 @@ if (false) {} else {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -40,6 +40,10 @@ class Main extends Component {
                 path="/Products"
                 render={() => <Products products={this.state.products} />}
               />
+              <Route
+                path="/Sales"
+                render={() => <Products products={this.state.products.filter(product => product.onSale)} />}
+              />
               <Redirect to="/Home" />
             </Switch>
           </Router>
