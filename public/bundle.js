@@ -86,6 +86,31 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./client/Home.js":
+/*!************************!*\
+  !*** ./client/Home.js ***!
+  \************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+const Home = () => {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+    "h2",
+    null,
+    "Welcome!!"
+  );
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Home);
+
+/***/ }),
+
 /***/ "./client/Main.js":
 /*!************************!*\
   !*** ./client/Main.js ***!
@@ -101,6 +126,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Navbar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Navbar */ "./client/Navbar.js");
+/* harmony import */ var _Home__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Home */ "./client/Home.js");
+
 
 
 
@@ -114,7 +141,7 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     };
   }
   componentDidMount() {
-    axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/products").then(products => this.setState({ products: products.data })).then(() => console.log(this.state.products)).catch(e => this.setState({ errorMessage: e.message }));
+    axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/products").then(products => this.setState({ products: products.data })).catch(e => this.setState({ errorMessage: e.message }));
   }
   render() {
     if (this.state.products.length !== 0) {
@@ -131,7 +158,13 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           null,
           react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
             render: ({ location }) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Navbar__WEBPACK_IMPORTED_MODULE_3__["default"], { products: this.state.products, location: location })
-          })
+          }),
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+            react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"],
+            null,
+            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], { path: "/Home", component: _Home__WEBPACK_IMPORTED_MODULE_4__["default"] }),
+            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], { to: "/Home" })
+          )
         )
       );
     } else return null;

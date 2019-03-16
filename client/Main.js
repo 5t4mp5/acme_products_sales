@@ -1,7 +1,13 @@
 import React, { Component } from "react";
-import { HashRouter as Router, Route } from "react-router-dom";
+import {
+  HashRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
+import Home from "./Home";
 
 class Main extends Component {
   constructor() {
@@ -14,7 +20,6 @@ class Main extends Component {
     axios
       .get("/api/products")
       .then(products => this.setState({ products: products.data }))
-      .then(() => console.log(this.state.products))
       .catch(e => this.setState({ errorMessage: e.message }));
   }
   render() {
@@ -28,6 +33,10 @@ class Main extends Component {
                 <Navbar products={this.state.products} location={location} />
               )}
             />
+            <Switch>
+              <Route path="/Home" component={Home} />
+              <Redirect to="/Home" />
+            </Switch>
           </Router>
         </div>
       );
