@@ -14,24 +14,25 @@ module.exports = db.define("product", {
         }
     },
     price: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
         allowNull: false
     },
     salePrice: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
     },
     availability: {
         type: Sequelize.ENUM("instock", "backordered", "discontinued")
     },
     discountPercent: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0
+        type: Sequelize.FLOAT,
     }
 }, {
     hooks: {
         beforeCreate: (product) => {
+            product.price = product.price.toFixed(2);
             if(product.discountPercent){
-                product.salePrice = (product.price * (100 - product.discountPercent)/100);
+                product.onSale = true;
+                product.salePrice = (product.price * (100 - product.discountPercent)/100).toFixed(2);
             }else{
                 product.salePrice = product.price;
             }

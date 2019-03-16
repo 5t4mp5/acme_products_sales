@@ -1,11 +1,23 @@
 const Product = require("./Product");
 
 module.exports = () => {
-  return Product.create({
-    name: "foo",
-    onSale: true,
-    price: 10,
-    discountPercent: 50,
-    availability: "instock"
-  });
+  return Promise.all([
+    Product.create({
+      name: "foo",
+      price: 10,
+      discountPercent: 50,
+      availability: "instock"
+    }),
+    Product.create({
+      name: "bar",
+      price: 21.4442,
+      availability: "backordered"
+    }),
+    Product.create({
+      name: "bazz",
+      price: 23,
+      discountPercent: 33.34,
+      availability: "backordered"
+    })
+  ]);
 };
