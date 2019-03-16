@@ -244,6 +244,11 @@ __webpack_require__.r(__webpack_exports__);
 
 const Product = ({ product }) => {
   const { name, price, salePrice, onSale, availability } = product;
+  const availabilityMap = {
+    instock: "success",
+    backordered: "warning",
+    discontinued: "danger"
+  };
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
     "li",
     { className: "list-group-item" },
@@ -264,7 +269,16 @@ const Product = ({ product }) => {
         "$",
         salePrice
       )
-    ) : ""
+    ) : "",
+    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+      "div",
+      { style: { margin: { bottom: "5px" } } },
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        "span",
+        { className: `badge badge-${availabilityMap[availability]}` },
+        availability
+      )
+    )
   );
 };
 

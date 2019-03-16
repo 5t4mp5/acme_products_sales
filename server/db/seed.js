@@ -18,6 +18,11 @@ module.exports = () => {
       price: 23,
       discountPercent: 33.34,
       availability: "backordered"
+    }),
+    Product.create({
+      name: "quq",
+      price: 100,
+      availability: "discontinued"
     })
   ]);
 };
