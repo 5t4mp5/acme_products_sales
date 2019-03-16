@@ -8,6 +8,7 @@ import {
 import axios from "axios";
 import Navbar from "./Navbar";
 import Home from "./Home";
+import Products from "./Products";
 
 class Main extends Component {
   constructor() {
@@ -35,6 +36,10 @@ class Main extends Component {
             />
             <Switch>
               <Route path="/Home" component={Home} />
+              <Route
+                path="/Products"
+                render={() => <Products products={this.state.products} />}
+              />
               <Redirect to="/Home" />
             </Switch>
           </Router>
