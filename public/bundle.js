@@ -138,6 +138,11 @@ __webpack_require__.r(__webpack_exports__);
 class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   constructor() {
     super();
+
+    this.remove = id => {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.delete(`/api/products/${id}`).then(() => axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/products")).then(products => this.setState({ products: products.data })).catch(e => this.setState({ errorMessage: e.message }));
+    };
+
     this.state = {
       products: []
     };
@@ -145,6 +150,7 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   componentDidMount() {
     axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/products").then(products => this.setState({ products: products.data })).catch(e => this.setState({ errorMessage: e.message }));
   }
+
   render() {
     if (this.state.products.length !== 0) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
@@ -167,11 +173,17 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
             react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], { path: "/Home", component: _Home__WEBPACK_IMPORTED_MODULE_4__["default"] }),
             react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
               path: "/Products",
-              render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Products__WEBPACK_IMPORTED_MODULE_5__["default"], { products: this.state.products })
+              render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Products__WEBPACK_IMPORTED_MODULE_5__["default"], {
+                products: this.state.products,
+                remove: this.remove
+              })
             }),
             react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
               path: "/Sales",
-              render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Products__WEBPACK_IMPORTED_MODULE_5__["default"], { products: this.state.products.filter(product => product.onSale) })
+              render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Products__WEBPACK_IMPORTED_MODULE_5__["default"], {
+                products: this.state.products.filter(product => product.onSale),
+                remove: this.remove
+              })
             }),
             react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], { to: "/Home" })
           )
@@ -242,8 +254,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
 
-const Product = ({ product }) => {
-  const { name, price, salePrice, onSale, availability } = product;
+const Product = ({ product, remove }) => {
+  const { id, name, price, salePrice, onSale, availability } = product;
   const availabilityMap = {
     instock: "success",
     backordered: "warning",
@@ -278,6 +290,12 @@ const Product = ({ product }) => {
         { className: `badge badge-${availabilityMap[availability]}` },
         availability
       )
+    ),
+    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null),
+    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+      "button",
+      { type: "button", className: "btn btn-danger", onClick: () => remove(id) },
+      "Delete"
     )
   );
 };
@@ -301,11 +319,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const Products = ({ products }) => {
+const Products = ({ products, remove }) => {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
     "ul",
     { className: "list-group" },
-    products.map(product => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Product__WEBPACK_IMPORTED_MODULE_1__["default"], { key: product.id, product: product }))
+    products.map(product => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Product__WEBPACK_IMPORTED_MODULE_1__["default"], { key: product.id, product: product, remove: remove }))
   );
 };
 

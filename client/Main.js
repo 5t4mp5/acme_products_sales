@@ -23,6 +23,13 @@ class Main extends Component {
       .then(products => this.setState({ products: products.data }))
       .catch(e => this.setState({ errorMessage: e.message }));
   }
+  remove = id => {
+    axios
+      .delete(`/api/products/${id}`)
+      .then(() => axios.get("/api/products"))
+      .then(products => this.setState({ products: products.data }))
+      .catch(e => this.setState({ errorMessage: e.message }));
+  };
   render() {
     if (this.state.products.length !== 0) {
       return (
@@ -38,11 +45,23 @@ class Main extends Component {
               <Route path="/Home" component={Home} />
               <Route
                 path="/Products"
-                render={() => <Products products={this.state.products} />}
+                render={() => (
+                  <Products
+                    products={this.state.products}
+                    remove={this.remove}
+                  />
+                )}
               />
               <Route
                 path="/Sales"
-                render={() => <Products products={this.state.products.filter(product => product.onSale)} />}
+                render={() => (
+                  <Products
+                    products={this.state.products.filter(
+                      product => product.onSale
+                    )}
+                    remove={this.remove}
+                  />
+                )}
               />
               <Redirect to="/Home" />
             </Switch>

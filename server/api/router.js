@@ -21,8 +21,8 @@ router.post("/products", (req, res, next) => {
     .catch(next);
 });
 
-router.delete("/products", (req, res, next) => {
-  Product.destroy({ where: { id: req.body.id } })
+router.delete("/products/:id", (req, res, next) => {
+  Product.destroy({ where: { id: req.params.id } })
     .then(() => res.sendStatus(204))
     .catch(next);
 });
