@@ -27,14 +27,15 @@ class Main extends Component {
   remove = id => {
     axios
       .delete(`/api/products/${id}`)
-      .then(() => axios.get("/api/products"))
-      .then(products => this.setState({ products: products.data }))
+      .then(() => this.setState({products: products.filter(product => product.id !== id)}))
       .catch(e => this.setState({ errorMessage: e.message }));
   };
-  updateProducts = () => {
+  addProduct = product => {
     axios
-      .get("api/products")
-      .then(products => this.setState({ products: products.data }));
+      .post("/api/products", product)
+      .then(() =>
+        this.setState({ products: [...this.state.products, product] })
+      );
   };
   render() {
     if (this.state.products.length !== 0) {
@@ -69,7 +70,12 @@ class Main extends Component {
                   />
                 )}
               />
-              <Route path="/Create" render={() => <CreateProduct updateProducts={this.updateProducts} /> } />
+              <Route
+                path="/Create"
+                render={() => (
+                  <CreateProduct addProduct={this.addProduct} />
+                )}
+              />
               <Redirect to="/Home" />
             </Switch>
           </Router>

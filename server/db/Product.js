@@ -32,8 +32,8 @@ module.exports = db.define(
   {
     hooks: {
       beforeCreate: product => {
-        console.log(product.get());
-        if (product.discountPercent <= 0) product.discountPercentage = null;
+        product.price = Number(product.price);
+        product.discountPercentage = Number(product.discountPercentage)
         if (product.discountPercentage) {
           product.onSale = true;
           product.salePrice = (

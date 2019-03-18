@@ -22,10 +22,18 @@ class CreateProduct extends Component {
   };
   handleSubmit = evt => {
     evt.preventDefault();
-    const updateProducts = this.props.updateProducts;
+    const addProduct = this.props.addProduct;
     axios
       .post("/api/products", this.state)
-      .then(() => updateProducts())
+      .then(() => addProduct(this.state))
+      .then(() =>
+        this.setState({
+          name: "",
+          price: "",
+          discountPercentage: "",
+          availability: "instock"
+        })
+      )
       .catch(ex => console.error(ex.message));
   };
   render() {

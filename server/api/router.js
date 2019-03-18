@@ -9,8 +9,6 @@ router.get("/products", (req, res, next) => {
 
 router.post("/products", (req, res, next) => {
   let { name, price, discountPercentage, availability } = req.body;
-  price = Number(price);
-  discountPercentage = Number(discountPercentage);
   Product.create({
     name,
     price,

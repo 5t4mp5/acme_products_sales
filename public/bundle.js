@@ -119,8 +119,13 @@ class CreateProduct extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 
     this.handleSubmit = evt => {
       evt.preventDefault();
-      const updateProducts = this.props.updateProducts;
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/products", this.state).then(() => updateProducts()).catch(ex => console.error(ex.message));
+      const addProduct = this.props.addProduct;
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/products", this.state).then(() => addProduct(this.state)).then(() => this.setState({
+        name: "",
+        price: "",
+        discountPercentage: "",
+        availability: "instock"
+      })).catch(ex => console.error(ex.message));
     };
 
     this.state = {
@@ -286,11 +291,11 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     super();
 
     this.remove = id => {
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.delete(`/api/products/${id}`).then(() => axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/products")).then(products => this.setState({ products: products.data })).catch(e => this.setState({ errorMessage: e.message }));
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.delete(`/api/products/${id}`).then(() => this.setState({ products: products.filter(product => product.id !== id) })).catch(e => this.setState({ errorMessage: e.message }));
     };
 
-    this.updateProducts = () => {
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("api/products").then(products => this.setState({ products: products.data }));
+    this.addProduct = product => {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/api/products", product).then(() => this.setState({ products: [...this.state.products, product] }));
     };
 
     this.state = {
@@ -335,7 +340,10 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
                 remove: this.remove
               })
             }),
-            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], { path: "/Create", render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CreateProduct__WEBPACK_IMPORTED_MODULE_6__["default"], { updateProducts: this.updateProducts }) }),
+            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+              path: "/Create",
+              render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CreateProduct__WEBPACK_IMPORTED_MODULE_6__["default"], { addProduct: this.addProduct })
+            }),
             react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], { to: "/Home" })
           )
         )
@@ -26314,7 +26322,7 @@ if (false) {} else {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
