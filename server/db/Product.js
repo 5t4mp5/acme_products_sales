@@ -1,41 +1,50 @@
 const db = require("./db");
 const Sequelize = db.Sequelize;
 
-module.exports = db.define("product", {
+module.exports = db.define(
+  "product",
+  {
     onSale: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
+      type: Sequelize.BOOLEAN,
+      defaultValue: false
     },
-    name:{
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate:{
-            notEmpty: true
-        }
+    name: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
     },
     price: {
-        type: Sequelize.FLOAT,
-        allowNull: false
+      type: Sequelize.FLOAT,
+      defaultValue: 0
     },
     salePrice: {
-        type: Sequelize.FLOAT,
+      type: Sequelize.FLOAT
     },
     availability: {
-        type: Sequelize.ENUM("instock", "backordered", "discontinued")
+      type: Sequelize.ENUM("instock", "backordered", "discontinued")
     },
-    discountPercent: {
-        type: Sequelize.FLOAT,
+    discountPercentage: {
+      type: Sequelize.FLOAT
     }
-}, {
+  },
+  {
     hooks: {
-        beforeCreate: (product) => {
-            product.price = product.price.toFixed(2);
-            if(product.discountPercent){
-                product.onSale = true;
-                product.salePrice = (product.price * (100 - product.discountPercent)/100).toFixed(2);
-            }else{
-                product.salePrice = product.price;
-            }
+      beforeCreate: product => {
+        console.log(product.get());
+        if (product.discountPercent <= 0) product.discountPercentage = null;
+        if (product.discountPercentage) {
+          product.onSale = true;
+          product.salePrice = (
+            (product.price * (100 - product.discountPercentage)) /
+            100
+          ).toFixed(2);
+        } else {
+          product.price = product.price.toFixed(2);
+          product.salePrice = product.price;
         }
+      }
     }
-});
+  }
+);

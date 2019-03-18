@@ -86,6 +86,133 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./client/CreateProduct.js":
+/*!*********************************!*\
+  !*** ./client/CreateProduct.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+class CreateProduct extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
+  constructor() {
+    super();
+
+    this.handleNumField = evt => {
+      const isNum = /^[0-9.\b]+$/;
+      if (isNum.test(evt.target.value) || evt.target.value === "") {
+        this.handleChange(evt);
+      }
+    };
+
+    this.handleChange = evt => {
+      this.setState({ [evt.target.name]: evt.target.value });
+    };
+
+    this.handleSubmit = evt => {
+      evt.preventDefault();
+      const updateProducts = this.props.updateProducts;
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/products", this.state).then(() => updateProducts()).catch(ex => console.error(ex.message));
+    };
+
+    this.state = {
+      name: "",
+      price: "",
+      discountPercentage: "",
+      availability: "instock"
+    };
+  }
+
+  render() {
+    const { name, price, discountPercentage, availability } = this.state;
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+      "form",
+      { onSubmit: this.handleSubmit },
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        "label",
+        { htmlFor: "Name" },
+        "Name"
+      ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        name: "name",
+        type: "text",
+        value: name,
+        onChange: this.handleChange
+      }),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        "label",
+        { htmlFor: "Price" },
+        "Price"
+      ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        name: "price",
+        type: "text",
+        value: price,
+        onChange: this.handleNumField
+      }),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        "label",
+        { htmlFor: "Discount Percentage" },
+        "Discount Percentage"
+      ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        name: "discountPercentage",
+        type: "text",
+        value: discountPercentage,
+        onChange: this.handleNumField
+      }),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        "label",
+        { htmlFor: "Availability" },
+        "Availability"
+      ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        "select",
+        {
+          name: "availability",
+          value: availability,
+          onChange: this.handleChange
+        },
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          "option",
+          { value: "instock" },
+          "instock"
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          "option",
+          { value: "backordered" },
+          "backordered"
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          "option",
+          { value: "discontinued" },
+          "discontinued"
+        )
+      ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        "button",
+        { type: "submit", className: "btn btn-primary" },
+        "Create"
+      )
+    );
+  }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (CreateProduct);
+
+/***/ }),
+
 /***/ "./client/Home.js":
 /*!************************!*\
   !*** ./client/Home.js ***!
@@ -128,6 +255,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Navbar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Navbar */ "./client/Navbar.js");
 /* harmony import */ var _Home__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Home */ "./client/Home.js");
 /* harmony import */ var _Products__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Products */ "./client/Products.js");
+/* harmony import */ var _CreateProduct__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CreateProduct */ "./client/CreateProduct.js");
+
 
 
 
@@ -141,6 +270,10 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 
     this.remove = id => {
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.delete(`/api/products/${id}`).then(() => axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/products")).then(products => this.setState({ products: products.data })).catch(e => this.setState({ errorMessage: e.message }));
+    };
+
+    this.updateProducts = () => {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("api/products").then(products => this.setState({ products: products.data }));
     };
 
     this.state = {
@@ -185,6 +318,7 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
                 remove: this.remove
               })
             }),
+            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], { path: "/Create", render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CreateProduct__WEBPACK_IMPORTED_MODULE_6__["default"], { updateProducts: this.updateProducts }) }),
             react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], { to: "/Home" })
           )
         )

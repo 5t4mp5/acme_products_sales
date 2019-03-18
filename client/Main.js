@@ -9,6 +9,7 @@ import axios from "axios";
 import Navbar from "./Navbar";
 import Home from "./Home";
 import Products from "./Products";
+import CreateProduct from "./CreateProduct";
 
 class Main extends Component {
   constructor() {
@@ -29,6 +30,11 @@ class Main extends Component {
       .then(() => axios.get("/api/products"))
       .then(products => this.setState({ products: products.data }))
       .catch(e => this.setState({ errorMessage: e.message }));
+  };
+  updateProducts = () => {
+    axios
+      .get("api/products")
+      .then(products => this.setState({ products: products.data }));
   };
   render() {
     if (this.state.products.length !== 0) {
@@ -63,6 +69,7 @@ class Main extends Component {
                   />
                 )}
               />
+              <Route path="/Create" render={() => <CreateProduct updateProducts={this.updateProducts} /> } />
               <Redirect to="/Home" />
             </Switch>
           </Router>

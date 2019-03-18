@@ -8,14 +8,14 @@ router.get("/products", (req, res, next) => {
 });
 
 router.post("/products", (req, res, next) => {
-  const { name, price, discountPercentage, availability } = req.body;
-  const onSale = discountPercentage !== undefined;
+  let { name, price, discountPercentage, availability } = req.body;
+  price = Number(price);
+  discountPercentage = Number(discountPercentage);
   Product.create({
     name,
     price,
     discountPercentage,
     availability,
-    onSale
   })
     .then(() => res.sendStatus(201))
     .catch(next);

@@ -5,7 +5,7 @@ module.exports = () => {
     Product.create({
       name: "foo",
       price: 10,
-      discountPercent: 50,
+      discountPercentage: 50,
       availability: "instock"
     }),
     Product.create({
@@ -16,7 +16,7 @@ module.exports = () => {
     Product.create({
       name: "bazz",
       price: 23,
-      discountPercent: 33.34,
+      discountPercentage: 33.34,
       availability: "backordered"
     }),
     Product.create({
