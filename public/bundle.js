@@ -121,7 +121,12 @@ class CreateProduct extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         name: "",
         price: "",
         discountPercentage: "",
-        availability: "instock"
+        availability: "instock",
+        message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          "div",
+          { className: "alert alert-success", role: "alert" },
+          "Product Created!"
+        )
       })).catch(ex => console.error(ex.message));
     };
 
@@ -129,12 +134,13 @@ class CreateProduct extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       name: "",
       price: "",
       discountPercentage: "",
-      availability: "instock"
+      availability: "instock",
+      message: ""
     };
   }
 
   render() {
-    const { name, price, discountPercentage, availability } = this.state;
+    const { name, price, discountPercentage, availability, message } = this.state;
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
       "form",
       { onSubmit: this.handleSubmit },
@@ -223,7 +229,8 @@ class CreateProduct extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         "button",
         { type: "submit", className: "btn btn-primary", disabled: !name || !price },
         "Create"
-      )
+      ),
+      message
     );
   }
 }

@@ -7,7 +7,8 @@ class CreateProduct extends Component {
       name: "",
       price: "",
       discountPercentage: "",
-      availability: "instock"
+      availability: "instock",
+      message: "",
     };
   }
   handleNumField = evt => {
@@ -28,13 +29,14 @@ class CreateProduct extends Component {
           name: "",
           price: "",
           discountPercentage: "",
-          availability: "instock"
+          availability: "instock",
+          message: <div className="alert alert-success" role="alert">Product Created!</div>
         })
       )
       .catch(ex => console.error(ex.message));
   };
   render() {
-    const { name, price, discountPercentage, availability } = this.state;
+    const { name, price, discountPercentage, availability, message } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
         <div>
@@ -83,6 +85,7 @@ class CreateProduct extends Component {
         <button type="submit" className="btn btn-primary" disabled={!name || !price}>
           Create
         </button>
+        {message}
       </form>
     );
   }
