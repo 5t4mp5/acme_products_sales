@@ -15,7 +15,7 @@ router.post("/products", (req, res, next) => {
     discountPercentage,
     availability,
   })
-    .then(() => res.sendStatus(201))
+    .then(product => res.status(201).json(product))
     .catch(next);
 });
 

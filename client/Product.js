@@ -8,7 +8,7 @@ const Product = ({ product, remove }) => {
     discontinued: "danger"
   };
   return (
-    <li className="list-group-item">
+    <li className="list-group-item" key={id}>
       {name}
       <br />
       <span style={onSale ? { textDecoration: "line-through" } : {}}>

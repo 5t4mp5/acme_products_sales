@@ -291,11 +291,11 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     super();
 
     this.remove = id => {
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.delete(`/api/products/${id}`).then(() => this.setState({ products: products.filter(product => product.id !== id) })).catch(e => this.setState({ errorMessage: e.message }));
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.delete(`/api/products/${id}`).then(() => this.setState({ products: this.state.products.filter(product => product.id !== id) })).catch(e => this.setState({ errorMessage: e.message }));
     };
 
     this.addProduct = product => {
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/api/products", product).then(() => this.setState({ products: [...this.state.products, product] }));
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/api/products", product).then(newProduct => this.setState({ products: [...this.state.products, newProduct.data] }));
     };
 
     this.state = {
@@ -307,48 +307,46 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   }
 
   render() {
-    if (this.state.products.length !== 0) {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        "div",
-        { className: "container" },
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+      "div",
+      { className: "container" },
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        "h1",
+        null,
+        "Acme Products/Sales"
+      ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        react_router_dom__WEBPACK_IMPORTED_MODULE_1__["HashRouter"],
+        null,
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+          render: ({ location }) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Navbar__WEBPACK_IMPORTED_MODULE_3__["default"], { products: this.state.products, location: location })
+        }),
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-          "h1",
+          react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"],
           null,
-          "Acme Products/Sales"
-        ),
-        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-          react_router_dom__WEBPACK_IMPORTED_MODULE_1__["HashRouter"],
-          null,
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], { path: "/Home", component: _Home__WEBPACK_IMPORTED_MODULE_4__["default"] }),
           react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-            render: ({ location }) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Navbar__WEBPACK_IMPORTED_MODULE_3__["default"], { products: this.state.products, location: location })
+            path: "/Products",
+            render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Products__WEBPACK_IMPORTED_MODULE_5__["default"], {
+              products: this.state.products,
+              remove: this.remove
+            })
           }),
-          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-            react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"],
-            null,
-            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], { path: "/Home", component: _Home__WEBPACK_IMPORTED_MODULE_4__["default"] }),
-            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-              path: "/Products",
-              render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Products__WEBPACK_IMPORTED_MODULE_5__["default"], {
-                products: this.state.products,
-                remove: this.remove
-              })
-            }),
-            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-              path: "/Sales",
-              render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Products__WEBPACK_IMPORTED_MODULE_5__["default"], {
-                products: this.state.products.filter(product => product.onSale),
-                remove: this.remove
-              })
-            }),
-            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-              path: "/Create",
-              render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CreateProduct__WEBPACK_IMPORTED_MODULE_6__["default"], { addProduct: this.addProduct })
-            }),
-            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], { to: "/Home" })
-          )
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+            path: "/Sales",
+            render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Products__WEBPACK_IMPORTED_MODULE_5__["default"], {
+              products: this.state.products.filter(product => product.onSale),
+              remove: this.remove
+            })
+          }),
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+            path: "/Create",
+            render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CreateProduct__WEBPACK_IMPORTED_MODULE_6__["default"], { addProduct: this.addProduct })
+          }),
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], { to: "/Home" })
         )
-      );
-    } else return null;
+      )
+    );
   }
 }
 
@@ -425,7 +423,7 @@ const Product = ({ product, remove }) => {
   };
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
     "li",
-    { className: "list-group-item" },
+    { className: "list-group-item", key: id },
     name,
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null),
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
@@ -26322,7 +26320,7 @@ if (false) {} else {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

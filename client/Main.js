@@ -27,18 +27,17 @@ class Main extends Component {
   remove = id => {
     axios
       .delete(`/api/products/${id}`)
-      .then(() => this.setState({products: products.filter(product => product.id !== id)}))
+      .then(() => this.setState({products: this.state.products.filter(product => product.id !== id)}))
       .catch(e => this.setState({ errorMessage: e.message }));
   };
   addProduct = product => {
     axios
       .post("/api/products", product)
-      .then(() =>
-        this.setState({ products: [...this.state.products, product] })
+      .then(newProduct =>
+        this.setState({ products: [...this.state.products, newProduct.data] })
       );
   };
   render() {
-    if (this.state.products.length !== 0) {
       return (
         <div className="container">
           <h1>Acme Products/Sales</h1>
@@ -81,7 +80,6 @@ class Main extends Component {
           </Router>
         </div>
       );
-    } else return null;
   }
 }
 
