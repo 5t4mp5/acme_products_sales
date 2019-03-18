@@ -1,7 +1,7 @@
 const { dbSyncAndSeed } = require("./db");
 const app = require("./app");
 
-const PORT = process.env.port || 3000;
+const PORT = process.env.PORT || 3000;
 
 dbSyncAndSeed()
   .then(() =>
