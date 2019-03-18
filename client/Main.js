@@ -31,7 +31,7 @@ class Main extends Component {
       .catch(e => this.setState({ errorMessage: e.message }));
   };
   addProduct = product => {
-    axios
+    return axios
       .post("/api/products", product)
       .then(newProduct =>
         this.setState({ products: [...this.state.products, newProduct.data] })

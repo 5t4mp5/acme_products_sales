@@ -23,9 +23,7 @@ class CreateProduct extends Component {
   handleSubmit = evt => {
     evt.preventDefault();
     const addProduct = this.props.addProduct;
-    axios
-      .post("/api/products", this.state)
-      .then(() => addProduct(this.state))
+    addProduct(this.state)
       .then(() =>
         this.setState({
           name: "",
@@ -83,7 +81,7 @@ class CreateProduct extends Component {
             <option value="discontinued">discontinued</option>
           </select>
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary" disabled={!name || !price}>
           Create
         </button>
       </form>

@@ -120,7 +120,7 @@ class CreateProduct extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     this.handleSubmit = evt => {
       evt.preventDefault();
       const addProduct = this.props.addProduct;
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/products", this.state).then(() => addProduct(this.state)).then(() => this.setState({
+      addProduct(this.state).then(() => this.setState({
         name: "",
         price: "",
         discountPercentage: "",
@@ -224,7 +224,7 @@ class CreateProduct extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       ),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
         "button",
-        { type: "submit", className: "btn btn-primary" },
+        { type: "submit", className: "btn btn-primary", disabled: !name || !price },
         "Create"
       )
     );
@@ -295,7 +295,7 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     };
 
     this.addProduct = product => {
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/api/products", product).then(newProduct => this.setState({ products: [...this.state.products, newProduct.data] }));
+      return axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/api/products", product).then(newProduct => this.setState({ products: [...this.state.products, newProduct.data] }));
     };
 
     this.state = {
