@@ -15,7 +15,10 @@ const Navbar = ({ products, location }) => {
           >
             {tab}
             {tab === "Products" || tab === "Sales" ? (
-              <span className="badge badge-primary">
+              <span
+                className="badge badge-primary"
+                style={{ marginLeft: "10px" } }
+              >
                 {tab === "Products"
                   ? products.length
                   : products.filter(product => product.onSale).length}

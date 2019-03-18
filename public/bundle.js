@@ -137,67 +137,84 @@ class CreateProduct extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       "form",
       { onSubmit: this.handleSubmit },
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        "label",
-        { htmlFor: "Name" },
-        "Name"
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        name: "name",
-        type: "text",
-        value: name,
-        onChange: this.handleChange
-      }),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        "label",
-        { htmlFor: "Price" },
-        "Price"
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        name: "price",
-        type: "text",
-        value: price,
-        onChange: this.handleNumField
-      }),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        "label",
-        { htmlFor: "Discount Percentage" },
-        "Discount Percentage"
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        name: "discountPercentage",
-        type: "text",
-        value: discountPercentage,
-        onChange: this.handleNumField
-      }),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        "label",
-        { htmlFor: "Availability" },
-        "Availability"
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        "select",
-        {
-          name: "availability",
-          value: availability,
+        "div",
+        null,
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          "label",
+          { htmlFor: "Name" },
+          "Name"
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          className: "form-control",
+          name: "name",
+          type: "text",
+          value: name,
           onChange: this.handleChange
-        },
+        })
+      ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        "div",
+        null,
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-          "option",
-          { value: "instock" },
-          "instock"
+          "label",
+          { htmlFor: "Price" },
+          "Price"
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          className: "form-control",
+          name: "price",
+          type: "text",
+          value: price,
+          onChange: this.handleNumField
+        })
+      ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        "div",
+        null,
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          "label",
+          { htmlFor: "Discount Percentage" },
+          "Discount Percentage"
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          className: "form-control",
+          name: "discountPercentage",
+          type: "text",
+          value: discountPercentage,
+          onChange: this.handleNumField
+        })
+      ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        "div",
+        null,
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          "label",
+          { htmlFor: "Availability" },
+          "Availability"
         ),
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-          "option",
-          { value: "backordered" },
-          "backordered"
-        ),
-        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-          "option",
-          { value: "discontinued" },
-          "discontinued"
+          "select",
+          {
+            className: "form-control",
+            name: "availability",
+            value: availability,
+            onChange: this.handleChange
+          },
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+            "option",
+            { value: "instock" },
+            "instock"
+          ),
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+            "option",
+            { value: "backordered" },
+            "backordered"
+          ),
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+            "option",
+            { value: "discontinued" },
+            "discontinued"
+          )
         )
       ),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
@@ -363,7 +380,10 @@ const Navbar = ({ products, location }) => {
         tab,
         tab === "Products" || tab === "Sales" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
           "span",
-          { className: "badge badge-primary" },
+          {
+            className: "badge badge-primary",
+            style: { marginLeft: "10px" }
+          },
           tab === "Products" ? products.length : products.filter(product => product.onSale).length
         ) : ""
       )
