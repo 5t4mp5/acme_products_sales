@@ -22,7 +22,7 @@ class Main extends Component {
   componentDidMount() {
     axios
       .get("/api/products")
-      .then(products => this.setState({ products: products.data }))
+      .then(products => this.setState({ products: products.data, message: "" }))
       .catch(e =>
         this.setState({
           message: (

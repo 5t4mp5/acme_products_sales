@@ -20,7 +20,7 @@ router.post("/products", (req, res, next) => {
 });
 
 router.delete("/products/:id", (req, res, next) => {
-  return Product.destroy({ where: { id: req.params.id } })
+  Product.destroy({ where: { id: req.params.id } })
     .then(product => res.status(201).json(product))
     .catch(next);
 });
