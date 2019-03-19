@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Message from "./Message";
 
 class CreateProduct extends Component {
   constructor() {
@@ -31,18 +32,10 @@ class CreateProduct extends Component {
           price: "",
           discountPercentage: "",
           availability: "instock",
-          message: (
-            <div
-              className="alert alert-success"
-              role="alert"
-              style={{ marginTop: "20px" }}
-            >
-              {product.data.name} Created!
-            </div>
-          )
+          message: (<Message type="success" text={`${product.data.name} Created!`} />)
         })
       )
-      .catch(ex => console.error(ex.message));
+      .catch(e => this.setState({ message: (<Message type="danger" text={e.message} />) }));
   };
   render() {
     const {

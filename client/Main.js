@@ -10,30 +10,34 @@ import Navbar from "./Navbar";
 import Home from "./Home";
 import Products from "./Products";
 import CreateProduct from "./CreateProduct";
+import Message from "./Message";
 
 class Main extends Component {
   constructor() {
     super();
     this.state = {
-      products: [],
+      products: []
     };
   }
   componentDidMount() {
     axios
       .get("/api/products")
       .then(products => this.setState({ products: products.data }))
-      .catch(e => console.error(e.message));
-    
+      .catch(e =>
+        this.setState({ message: <Message type="danger" text={e.message} /> })
+      );
   }
   remove = ({ id }) => {
     axios
       .delete(`/api/products/${id}`)
       .then(() =>
         this.setState({
-          products: this.state.products.filter(product => product.id !== id),
+          products: this.state.products.filter(product => product.id !== id)
         })
       )
-      .catch(e => console.error(e.message));
+      .catch(e =>
+        this.setState({ message: <Message type="danger" text={e.message} /> })
+      );
   };
   addProduct = product => {
     return axios.post("/api/products", product).then(newProduct => {

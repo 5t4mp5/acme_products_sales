@@ -97,6 +97,8 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Message */ "./client/Message.js");
+
 
 
 class CreateProduct extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
@@ -123,17 +125,8 @@ class CreateProduct extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         price: "",
         discountPercentage: "",
         availability: "instock",
-        message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-          "div",
-          {
-            className: "alert alert-success",
-            role: "alert",
-            style: { marginTop: "20px" }
-          },
-          product.data.name,
-          " Created!"
-        )
-      })).catch(ex => console.error(ex.message));
+        message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_1__["default"], { type: "success", text: `${product.data.name} Created!` })
+      })).catch(e => this.setState({ message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_1__["default"], { type: "danger", text: e.message }) }));
     };
 
     this.state = {
@@ -299,6 +292,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Home__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Home */ "./client/Home.js");
 /* harmony import */ var _Products__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Products */ "./client/Products.js");
 /* harmony import */ var _CreateProduct__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CreateProduct */ "./client/CreateProduct.js");
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Message */ "./client/Message.js");
+
 
 
 
@@ -314,7 +309,7 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     this.remove = ({ id }) => {
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.delete(`/api/products/${id}`).then(() => this.setState({
         products: this.state.products.filter(product => product.id !== id)
-      })).catch(e => console.error(e.message));
+      })).catch(e => this.setState({ message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_7__["default"], { type: "danger", text: e.message }) }));
     };
 
     this.addProduct = product => {
@@ -329,7 +324,7 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     };
   }
   componentDidMount() {
-    axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/products").then(products => this.setState({ products: products.data })).catch(e => console.error(e.message));
+    axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/products").then(products => this.setState({ products: products.data })).catch(e => this.setState({ message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_7__["default"], { type: "danger", text: e.message }) }));
   }
 
   render() {
@@ -375,6 +370,35 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Main);
+
+/***/ }),
+
+/***/ "./client/Message.js":
+/*!***************************!*\
+  !*** ./client/Message.js ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+const Message = ({ type, text }) => {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+    "div",
+    {
+      className: `alert alert-${type}`,
+      role: "alert",
+      style: { marginTop: "20px" }
+    },
+    text
+  );
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Message);
 
 /***/ }),
 
@@ -26348,7 +26372,7 @@ if (false) {} else {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
