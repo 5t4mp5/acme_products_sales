@@ -27,59 +27,57 @@ class Main extends Component {
   remove = id => {
     axios
       .delete(`/api/products/${id}`)
-      .then(() => this.setState({products: this.state.products.filter(product => product.id !== id)}))
+      .then(() =>
+        this.setState({
+          products: this.state.products.filter(product => product.id !== id)
+        })
+      )
       .catch(e => this.setState({ errorMessage: e.message }));
   };
   addProduct = product => {
-    return axios
-      .post("/api/products", product)
-      .then(newProduct =>
-        this.setState({ products: [...this.state.products, newProduct.data] })
-      );
+    return axios.post("/api/products", product).then(newProduct => {
+      this.setState({ products: [...this.state.products, newProduct.data] });
+      return newProduct;
+    });
   };
   render() {
-      return (
-        <div className="container">
-          <h1>Acme Products/Sales</h1>
-          <Router>
+    return (
+      <div className="container">
+        <h1>Acme Products/Sales</h1>
+        <Router>
+          <Route
+            render={({ location }) => (
+              <Navbar products={this.state.products} location={location} />
+            )}
+          />
+          <Switch>
+            <Route path="/Home" component={Home} />
             <Route
-              render={({ location }) => (
-                <Navbar products={this.state.products} location={location} />
+              path="/Products"
+              render={() => (
+                <Products products={this.state.products} remove={this.remove} />
               )}
             />
-            <Switch>
-              <Route path="/Home" component={Home} />
-              <Route
-                path="/Products"
-                render={() => (
-                  <Products
-                    products={this.state.products}
-                    remove={this.remove}
-                  />
-                )}
-              />
-              <Route
-                path="/Sales"
-                render={() => (
-                  <Products
-                    products={this.state.products.filter(
-                      product => product.onSale
-                    )}
-                    remove={this.remove}
-                  />
-                )}
-              />
-              <Route
-                path="/Create"
-                render={() => (
-                  <CreateProduct addProduct={this.addProduct} />
-                )}
-              />
-              <Redirect to="/Home" />
-            </Switch>
-          </Router>
-        </div>
-      );
+            <Route
+              path="/Sales"
+              render={() => (
+                <Products
+                  products={this.state.products.filter(
+                    product => product.onSale
+                  )}
+                  remove={this.remove}
+                />
+              )}
+            />
+            <Route
+              path="/Create"
+              render={() => <CreateProduct addProduct={this.addProduct} />}
+            />
+            <Redirect to="/Home" />
+          </Switch>
+        </Router>
+      </div>
+    );
   }
 }
 

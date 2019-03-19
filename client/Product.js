@@ -12,11 +12,11 @@ const Product = ({ product, remove }) => {
       {name}
       <br />
       <span style={onSale ? { textDecoration: "line-through" } : {}}>
-        ${price}
+        ${price.toFixed(2)}
       </span>
       {onSale ? (
         <div style={{ margin: { bottom: "5px" } }}>
-          <span className="badge badge-success">${salePrice}</span>
+          <span className="badge badge-success">${salePrice.toFixed(2)}</span>
         </div>
       ) : (
         ""

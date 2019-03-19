@@ -111,21 +111,27 @@ class CreateProduct extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     };
 
     this.handleChange = evt => {
+      if (this.state.message) this.setState({ message: "" });
       this.setState({ [evt.target.name]: evt.target.value });
     };
 
     this.handleSubmit = evt => {
       evt.preventDefault();
       const addProduct = this.props.addProduct;
-      addProduct(this.state).then(() => this.setState({
+      addProduct(this.state).then(product => this.setState({
         name: "",
         price: "",
         discountPercentage: "",
         availability: "instock",
         message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
           "div",
-          { className: "alert alert-success", role: "alert" },
-          "Product Created!"
+          {
+            className: "alert alert-success",
+            role: "alert",
+            style: { marginTop: "20px" }
+          },
+          product.data.name,
+          " Created!"
         )
       })).catch(ex => console.error(ex.message));
     };
@@ -140,7 +146,13 @@ class CreateProduct extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   }
 
   render() {
-    const { name, price, discountPercentage, availability, message } = this.state;
+    const {
+      name,
+      price,
+      discountPercentage,
+      availability,
+      message
+    } = this.state;
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
       "form",
       { onSubmit: this.handleSubmit },
@@ -227,7 +239,12 @@ class CreateProduct extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       ),
       react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
         "button",
-        { type: "submit", className: "btn btn-primary", disabled: !name || !price },
+        {
+          type: "submit",
+          className: "btn btn-primary",
+          style: { marginTop: "10px" },
+          disabled: !name || !price
+        },
         "Create"
       ),
       message
@@ -295,11 +312,16 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     super();
 
     this.remove = id => {
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.delete(`/api/products/${id}`).then(() => this.setState({ products: this.state.products.filter(product => product.id !== id) })).catch(e => this.setState({ errorMessage: e.message }));
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.delete(`/api/products/${id}`).then(() => this.setState({
+        products: this.state.products.filter(product => product.id !== id)
+      })).catch(e => this.setState({ errorMessage: e.message }));
     };
 
     this.addProduct = product => {
-      return axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/api/products", product).then(newProduct => this.setState({ products: [...this.state.products, newProduct.data] }));
+      return axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/api/products", product).then(newProduct => {
+        this.setState({ products: [...this.state.products, newProduct.data] });
+        return newProduct;
+      });
     };
 
     this.state = {
@@ -331,10 +353,7 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], { path: "/Home", component: _Home__WEBPACK_IMPORTED_MODULE_4__["default"] }),
           react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
             path: "/Products",
-            render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Products__WEBPACK_IMPORTED_MODULE_5__["default"], {
-              products: this.state.products,
-              remove: this.remove
-            })
+            render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Products__WEBPACK_IMPORTED_MODULE_5__["default"], { products: this.state.products, remove: this.remove })
           }),
           react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
             path: "/Sales",
@@ -434,7 +453,7 @@ const Product = ({ product, remove }) => {
       "span",
       { style: onSale ? { textDecoration: "line-through" } : {} },
       "$",
-      price
+      price.toFixed(2)
     ),
     onSale ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
       "div",
@@ -443,7 +462,7 @@ const Product = ({ product, remove }) => {
         "span",
         { className: "badge badge-success" },
         "$",
-        salePrice
+        salePrice.toFixed(2)
       )
     ) : "",
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(

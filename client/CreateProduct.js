@@ -8,7 +8,7 @@ class CreateProduct extends Component {
       price: "",
       discountPercentage: "",
       availability: "instock",
-      message: "",
+      message: ""
     };
   }
   handleNumField = evt => {
@@ -18,25 +18,40 @@ class CreateProduct extends Component {
     }
   };
   handleChange = evt => {
+    if (this.state.message) this.setState({ message: "" });
     this.setState({ [evt.target.name]: evt.target.value });
   };
   handleSubmit = evt => {
     evt.preventDefault();
     const addProduct = this.props.addProduct;
     addProduct(this.state)
-      .then(() =>
+      .then(product =>
         this.setState({
           name: "",
           price: "",
           discountPercentage: "",
           availability: "instock",
-          message: <div className="alert alert-success" role="alert">Product Created!</div>
+          message: (
+            <div
+              className="alert alert-success"
+              role="alert"
+              style={{ marginTop: "20px" }}
+            >
+              {product.data.name} Created!
+            </div>
+          )
         })
       )
       .catch(ex => console.error(ex.message));
   };
   render() {
-    const { name, price, discountPercentage, availability, message } = this.state;
+    const {
+      name,
+      price,
+      discountPercentage,
+      availability,
+      message
+    } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
         <div>
@@ -82,7 +97,12 @@ class CreateProduct extends Component {
             <option value="discontinued">discontinued</option>
           </select>
         </div>
-        <button type="submit" className="btn btn-primary" disabled={!name || !price}>
+        <button
+          type="submit"
+          className="btn btn-primary"
+          style={{ marginTop: "10px" }}
+          disabled={!name || !price}
+        >
           Create
         </button>
         {message}
