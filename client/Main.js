@@ -15,21 +15,31 @@ class Main extends Component {
   constructor() {
     super();
     this.state = {
-      products: []
+      products: [],
+      message: ""
     };
   }
   componentDidMount() {
     axios
       .get("/api/products")
       .then(products => this.setState({ products: products.data }))
-      .catch(e => this.setState({ errorMessage: e.message }));
+      .catch(e =>
+        this.setState({
+          message: (
+            <div className="alert alert-danger" role="alert">
+              {e.message}
+            </div>
+          )
+        })
+      );
   }
-  remove = id => {
+  remove = ({ id, name }) => {
     axios
       .delete(`/api/products/${id}`)
       .then(() =>
         this.setState({
-          products: this.state.products.filter(product => product.id !== id)
+          products: this.state.products.filter(product => product.id !== id),
+          message: <div className="alert alert-success">{name} Deleted</div>
         })
       )
       .catch(e => this.setState({ errorMessage: e.message }));
@@ -76,6 +86,7 @@ class Main extends Component {
             <Redirect to="/Home" />
           </Switch>
         </Router>
+        {this.state.message}
       </div>
     );
   }

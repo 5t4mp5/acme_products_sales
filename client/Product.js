@@ -27,7 +27,7 @@ const Product = ({ product, remove }) => {
         </span>
       </div>
       <br />
-      <button type="button" className="btn btn-danger" onClick={() => remove(id)}>Delete</button>
+      <button type="button" className="btn btn-danger" onClick={() => remove(product)}>Delete</button>
     </li>
   );
 };

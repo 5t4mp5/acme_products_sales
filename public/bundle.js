@@ -311,9 +311,15 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   constructor() {
     super();
 
-    this.remove = id => {
+    this.remove = ({ id, name }) => {
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.delete(`/api/products/${id}`).then(() => this.setState({
-        products: this.state.products.filter(product => product.id !== id)
+        products: this.state.products.filter(product => product.id !== id),
+        message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          "div",
+          { className: "alert alert-success" },
+          name,
+          " Deleted"
+        )
       })).catch(e => this.setState({ errorMessage: e.message }));
     };
 
@@ -325,11 +331,18 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     };
 
     this.state = {
-      products: []
+      products: [],
+      message: ""
     };
   }
   componentDidMount() {
-    axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/products").then(products => this.setState({ products: products.data })).catch(e => this.setState({ errorMessage: e.message }));
+    axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/products").then(products => this.setState({ products: products.data })).catch(e => this.setState({
+      message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        "div",
+        { className: "alert alert-danger", role: "alert" },
+        e.message
+      )
+    }));
   }
 
   render() {
@@ -368,7 +381,8 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           }),
           react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], { to: "/Home" })
         )
-      )
+      ),
+      this.state.message
     );
   }
 }
@@ -477,7 +491,7 @@ const Product = ({ product, remove }) => {
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null),
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
       "button",
-      { type: "button", className: "btn btn-danger", onClick: () => remove(id) },
+      { type: "button", className: "btn btn-danger", onClick: () => remove(product) },
       "Delete"
     )
   );
@@ -26343,7 +26357,7 @@ if (false) {} else {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

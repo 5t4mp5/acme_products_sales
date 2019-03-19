@@ -20,8 +20,8 @@ router.post("/products", (req, res, next) => {
 });
 
 router.delete("/products/:id", (req, res, next) => {
-  Product.destroy({ where: { id: req.params.id } })
-    .then(() => res.sendStatus(204))
+  return Product.destroy({ where: { id: req.params.id } })
+    .then(product => res.status(201).json(product))
     .catch(next);
 });
 
