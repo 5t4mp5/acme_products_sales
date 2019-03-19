@@ -16,33 +16,24 @@ class Main extends Component {
     super();
     this.state = {
       products: [],
-      message: ""
     };
   }
   componentDidMount() {
     axios
       .get("/api/products")
-      .then(products => this.setState({ products: products.data, message: "" }))
-      .catch(e =>
-        this.setState({
-          message: (
-            <div className="alert alert-danger" role="alert">
-              {e.message}
-            </div>
-          )
-        })
-      );
+      .then(products => this.setState({ products: products.data }))
+      .catch(e => console.error(e.message));
+    
   }
-  remove = ({ id, name }) => {
+  remove = ({ id }) => {
     axios
       .delete(`/api/products/${id}`)
       .then(() =>
         this.setState({
           products: this.state.products.filter(product => product.id !== id),
-          message: <div className="alert alert-success">{name} Deleted</div>
         })
       )
-      .catch(e => this.setState({ errorMessage: e.message }));
+      .catch(e => console.error(e.message));
   };
   addProduct = product => {
     return axios.post("/api/products", product).then(newProduct => {

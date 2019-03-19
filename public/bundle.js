@@ -311,16 +311,10 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   constructor() {
     super();
 
-    this.remove = ({ id, name }) => {
+    this.remove = ({ id }) => {
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.delete(`/api/products/${id}`).then(() => this.setState({
-        products: this.state.products.filter(product => product.id !== id),
-        message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-          "div",
-          { className: "alert alert-success" },
-          name,
-          " Deleted"
-        )
-      })).catch(e => this.setState({ errorMessage: e.message }));
+        products: this.state.products.filter(product => product.id !== id)
+      })).catch(e => console.error(e.message));
     };
 
     this.addProduct = product => {
@@ -331,18 +325,11 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     };
 
     this.state = {
-      products: [],
-      message: ""
+      products: []
     };
   }
   componentDidMount() {
-    axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/products").then(products => this.setState({ products: products.data })).catch(e => this.setState({
-      message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        "div",
-        { className: "alert alert-danger", role: "alert" },
-        e.message
-      )
-    }));
+    axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/products").then(products => this.setState({ products: products.data })).catch(e => console.error(e.message));
   }
 
   render() {
@@ -518,9 +505,13 @@ __webpack_require__.r(__webpack_exports__);
 
 const Products = ({ products, remove }) => {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-    "ul",
-    { className: "list-group" },
-    products.map(product => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Product__WEBPACK_IMPORTED_MODULE_1__["default"], { key: product.id, product: product, remove: remove }))
+    react__WEBPACK_IMPORTED_MODULE_0__["Fragment"],
+    null,
+    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+      "ul",
+      { className: "list-group" },
+      products.map(product => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Product__WEBPACK_IMPORTED_MODULE_1__["default"], { key: product.id, product: product, remove: remove }))
+    )
   );
 };
 
