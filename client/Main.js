@@ -45,6 +45,9 @@ class Main extends Component {
       return newProduct;
     });
   };
+  resetMessage = () => {
+    this.setState({ message: "" });
+  }
   render() {
     return (
       <div className="container">
@@ -60,7 +63,7 @@ class Main extends Component {
             <Route
               path="/Products"
               render={() => (
-                <Products products={this.state.products} remove={this.remove} />
+                <Products products={this.state.products} remove={this.remove} resetMessage={this.resetMessage} />
               )}
             />
             <Route
@@ -70,7 +73,7 @@ class Main extends Component {
                   products={this.state.products.filter(
                     product => product.onSale
                   )}
-                  remove={this.remove}
+                  remove={this.remove} resetMessage={this.resetMessage}
                 />
               )}
             />

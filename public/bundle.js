@@ -125,8 +125,12 @@ class CreateProduct extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         price: "",
         discountPercentage: "",
         availability: "instock",
-        message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_1__["default"], { type: "success", text: `${product.data.name} Created!` })
-      })).catch(e => this.setState({ message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_1__["default"], { type: "danger", text: e.message }) }));
+        message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_1__["default"], { type: "success", text: `${product.data.name} Created!`, resetMessage: this.resetMessage })
+      })).catch(e => this.setState({ message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_1__["default"], { type: "danger", text: e.message, resetMessage: this.resetMessage }) }));
+    };
+
+    this.resetMessage = () => {
+      this.setState({ message: "" });
     };
 
     this.state = {
@@ -319,6 +323,10 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       });
     };
 
+    this.resetMessage = () => {
+      this.setState({ message: "" });
+    };
+
     this.state = {
       products: []
     };
@@ -348,13 +356,13 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], { path: "/Home", component: _Home__WEBPACK_IMPORTED_MODULE_4__["default"] }),
           react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
             path: "/Products",
-            render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Products__WEBPACK_IMPORTED_MODULE_5__["default"], { products: this.state.products, remove: this.remove })
+            render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Products__WEBPACK_IMPORTED_MODULE_5__["default"], { products: this.state.products, remove: this.remove, resetMessage: this.resetMessage })
           }),
           react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
             path: "/Sales",
             render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Products__WEBPACK_IMPORTED_MODULE_5__["default"], {
               products: this.state.products.filter(product => product.onSale),
-              remove: this.remove
+              remove: this.remove, resetMessage: this.resetMessage
             })
           }),
           react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
@@ -386,7 +394,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
 
-const Message = ({ type, text }) => {
+const Message = ({ type, text, resetMessage }) => {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
     "div",
     {
@@ -394,7 +402,16 @@ const Message = ({ type, text }) => {
       role: "alert",
       style: { marginTop: "20px" }
     },
-    text
+    text,
+    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+      "button",
+      {
+        type: "button",
+        style: { width: "30px", height: "30px", position: "absolute", right: "10px", top: "10px" },
+        onClick: () => resetMessage()
+      },
+      "X"
+    )
   );
 };
 

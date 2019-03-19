@@ -32,11 +32,14 @@ class CreateProduct extends Component {
           price: "",
           discountPercentage: "",
           availability: "instock",
-          message: (<Message type="success" text={`${product.data.name} Created!`} />)
+          message: (<Message type="success" text={`${product.data.name} Created!`} resetMessage={this.resetMessage} />)
         })
       )
-      .catch(e => this.setState({ message: (<Message type="danger" text={e.message} />) }));
+      .catch(e => this.setState({ message: (<Message type="danger" text={e.message} resetMessage={this.resetMessage} />) }));
   };
+  resetMessage = () => {
+    this.setState({ message: "" });
+  }
   render() {
     const {
       name,
