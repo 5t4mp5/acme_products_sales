@@ -98,6 +98,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Message */ "./client/Message.js");
+/* harmony import */ var _ProductForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ProductForm */ "./client/ProductForm.js");
+
 
 
 
@@ -125,8 +127,18 @@ class CreateProduct extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         price: "",
         discountPercentage: "",
         availability: "instock",
-        message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_1__["default"], { type: "success", text: `${product.data.name} Created!`, resetMessage: this.resetMessage })
-      })).catch(e => this.setState({ message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_1__["default"], { type: "danger", text: e.message, resetMessage: this.resetMessage }) }));
+        message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          type: "success",
+          text: `${product.data.name} Created!`,
+          resetMessage: this.resetMessage
+        })
+      })).catch(e => this.setState({
+        message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          type: "danger",
+          text: e.message,
+          resetMessage: this.resetMessage
+        })
+      }));
     };
 
     this.resetMessage = () => {
@@ -150,102 +162,16 @@ class CreateProduct extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       availability,
       message
     } = this.state;
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-      "form",
-      { onSubmit: this.handleSubmit },
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        "div",
-        null,
-        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-          "label",
-          { htmlFor: "Name" },
-          "Name"
-        ),
-        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          className: "form-control",
-          name: "name",
-          type: "text",
-          value: name,
-          onChange: this.handleChange
-        })
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        "div",
-        null,
-        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-          "label",
-          { htmlFor: "Price" },
-          "Price"
-        ),
-        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          className: "form-control",
-          name: "price",
-          type: "text",
-          value: price,
-          onChange: this.handleNumField
-        })
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        "div",
-        null,
-        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-          "label",
-          { htmlFor: "Discount Percentage" },
-          "Discount Percentage"
-        ),
-        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          className: "form-control",
-          name: "discountPercentage",
-          type: "text",
-          value: discountPercentage,
-          onChange: this.handleNumField
-        })
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        "div",
-        null,
-        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-          "label",
-          { htmlFor: "Availability" },
-          "Availability"
-        ),
-        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-          "select",
-          {
-            className: "form-control",
-            name: "availability",
-            value: availability,
-            onChange: this.handleChange
-          },
-          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-            "option",
-            { value: "instock" },
-            "instock"
-          ),
-          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-            "option",
-            { value: "backordered" },
-            "backordered"
-          ),
-          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-            "option",
-            { value: "discontinued" },
-            "discontinued"
-          )
-        )
-      ),
-      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-        "button",
-        {
-          type: "submit",
-          className: "btn btn-primary",
-          style: { marginTop: "10px" },
-          disabled: !name || !price
-        },
-        "Create"
-      ),
-      message
-    );
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ProductForm__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      name: name,
+      price: price,
+      discountPercentage: discountPercentage,
+      availability: availability,
+      message: message,
+      handleChange: this.handleChange,
+      handleNumField: this.handleNumField,
+      handleSubmit: this.handleSubmit
+    });
   }
 }
 
@@ -597,6 +523,131 @@ const Product = ({ product, remove }) => {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Product);
+
+/***/ }),
+
+/***/ "./client/ProductForm.js":
+/*!*******************************!*\
+  !*** ./client/ProductForm.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+const ProductForm = ({
+  name,
+  price,
+  discountPercentage,
+  availability,
+  message,
+  handleNumField,
+  handleChange,
+  handleSubmit
+}) => {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+    "form",
+    { onSubmit: handleSubmit },
+    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+      "div",
+      null,
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        "label",
+        { htmlFor: "Name" },
+        "Name"
+      ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-control",
+        name: "name",
+        type: "text",
+        value: name,
+        onChange: handleChange
+      })
+    ),
+    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+      "div",
+      null,
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        "label",
+        { htmlFor: "Price" },
+        "Price"
+      ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-control",
+        name: "price",
+        type: "text",
+        value: price,
+        onChange: handleNumField
+      })
+    ),
+    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+      "div",
+      null,
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        "label",
+        { htmlFor: "Discount Percentage" },
+        "Discount Percentage"
+      ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-control",
+        name: "discountPercentage",
+        type: "text",
+        value: discountPercentage,
+        onChange: handleNumField
+      })
+    ),
+    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+      "div",
+      null,
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        "label",
+        { htmlFor: "Availability" },
+        "Availability"
+      ),
+      react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+        "select",
+        {
+          className: "form-control",
+          name: "availability",
+          value: availability,
+          onChange: handleChange
+        },
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          "option",
+          { value: "instock" },
+          "instock"
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          "option",
+          { value: "backordered" },
+          "backordered"
+        ),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+          "option",
+          { value: "discontinued" },
+          "discontinued"
+        )
+      )
+    ),
+    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+      "button",
+      {
+        type: "submit",
+        className: "btn btn-primary",
+        style: { marginTop: "10px" },
+        disabled: !name || !price
+      },
+      "Create"
+    ),
+    message
+  );
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (ProductForm);
 
 /***/ }),
 

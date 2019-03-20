@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Message from "./Message";
+import ProductForm from "./ProductForm";
 
 class CreateProduct extends Component {
   constructor() {
@@ -32,14 +33,30 @@ class CreateProduct extends Component {
           price: "",
           discountPercentage: "",
           availability: "instock",
-          message: (<Message type="success" text={`${product.data.name} Created!`} resetMessage={this.resetMessage} />)
+          message: (
+            <Message
+              type="success"
+              text={`${product.data.name} Created!`}
+              resetMessage={this.resetMessage}
+            />
+          )
         })
       )
-      .catch(e => this.setState({ message: (<Message type="danger" text={e.message} resetMessage={this.resetMessage} />) }));
+      .catch(e =>
+        this.setState({
+          message: (
+            <Message
+              type="danger"
+              text={e.message}
+              resetMessage={this.resetMessage}
+            />
+          )
+        })
+      );
   };
   resetMessage = () => {
     this.setState({ message: "" });
-  }
+  };
   render() {
     const {
       name,
@@ -49,60 +66,16 @@ class CreateProduct extends Component {
       message
     } = this.state;
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div>
-          <label htmlFor="Name">Name</label>
-          <input
-            className="form-control"
-            name="name"
-            type="text"
-            value={name}
-            onChange={this.handleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="Price">Price</label>
-          <input
-            className="form-control"
-            name="price"
-            type="text"
-            value={price}
-            onChange={this.handleNumField}
-          />
-        </div>
-        <div>
-          <label htmlFor="Discount Percentage">Discount Percentage</label>
-          <input
-            className="form-control"
-            name="discountPercentage"
-            type="text"
-            value={discountPercentage}
-            onChange={this.handleNumField}
-          />
-        </div>
-        <div>
-          <label htmlFor="Availability">Availability</label>
-          <select
-            className="form-control"
-            name="availability"
-            value={availability}
-            onChange={this.handleChange}
-          >
-            <option value="instock">instock</option>
-            <option value="backordered">backordered</option>
-            <option value="discontinued">discontinued</option>
-          </select>
-        </div>
-        <button
-          type="submit"
-          className="btn btn-primary"
-          style={{ marginTop: "10px" }}
-          disabled={!name || !price}
-        >
-          Create
-        </button>
-        {message}
-      </form>
+      <ProductForm
+        name={name}
+        price={price}
+        discountPercentage={discountPercentage}
+        availability={availability}
+        message={message}
+        handleChange={this.handleChange}
+        handleNumField={this.handleNumField}
+        handleSubmit={this.handleSubmit}
+      />
     );
   }
 }
