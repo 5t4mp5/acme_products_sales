@@ -8,7 +8,8 @@ const ProductForm = ({
   message,
   handleNumField,
   handleChange,
-  handleSubmit
+  handleSubmit,
+  buttonName
 }) => {
   return (
     <form onSubmit={handleSubmit}>
@@ -61,7 +62,7 @@ const ProductForm = ({
         style={{ marginTop: "10px" }}
         disabled={!name || !price}
       >
-        Create
+        {buttonName}
       </button>
       {message}
     </form>

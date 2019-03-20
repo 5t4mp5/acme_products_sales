@@ -1,17 +1,35 @@
 import React, { Component } from "react";
 import Message from "./Message";
 import ProductForm from "./ProductForm";
+import axios from "axios";
 
-class CreateProduct extends Component {
+class UpdateProduct extends Component {
   constructor() {
     super();
     this.state = {
+      id: "",
       name: "",
       price: "",
       discountPercentage: "",
       availability: "instock",
       message: ""
     };
+  }
+  componentDidMount() {
+    axios
+      .get(`/api/products/${this.props.match.params.id}`)
+      .then(product => this.setState(product.data))
+      .catch(e =>
+        this.setState({
+          message: (
+            <Message
+              type="danger"
+              text={e.message}
+              resetMessage={this.resetMessage}
+            />
+          )
+        })
+      );
   }
   handleNumField = evt => {
     const isNum = /^[0-9.\b]+$/;
@@ -24,24 +42,21 @@ class CreateProduct extends Component {
     this.setState({ [evt.target.name]: evt.target.value });
   };
   handleSubmit = evt => {
+    const updateProduct = this.props.updateProduct;
     evt.preventDefault();
-    const addProduct = this.props.addProduct;
-    addProduct(this.state)
-      .then(product =>
+    updateProduct(this.state)
+      .then(() => {
+        const name = this.state.name;
         this.setState({
-          name: "",
-          price: "",
-          discountPercentage: "",
-          availability: "instock",
           message: (
             <Message
               type="success"
-              text={`${product.data.name} Created!`}
+              text={`${name} Updated!`}
               resetMessage={this.resetMessage}
             />
           )
         })
-      )
+      })
       .catch(e =>
         this.setState({
           message: (
@@ -75,10 +90,10 @@ class CreateProduct extends Component {
         handleChange={this.handleChange}
         handleNumField={this.handleNumField}
         handleSubmit={this.handleSubmit}
-        buttonName="Create"
+        buttonName="Update"
       />
     );
   }
 }
 
-export default CreateProduct;
+export default UpdateProduct;
