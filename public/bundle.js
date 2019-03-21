@@ -350,7 +350,7 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           })
         }),
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-          path: "(/Products|/Sales)",
+          exact: true, path: "(/Products|/Sales)",
           render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_DisabledOption__WEBPACK_IMPORTED_MODULE_9__["default"], {
             showDisabled: this.state.showDisabled,
             toggle: this.toggleShowDisabled

@@ -102,7 +102,7 @@ class Main extends Component {
             )}
           />
           <Route
-            path="(/Products|/Sales)"
+            exact path="(/Products|/Sales)"
             render={() => (
               <DisabledOption
                 showDisabled={this.state.showDisabled}
