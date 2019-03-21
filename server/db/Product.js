@@ -31,17 +31,11 @@ module.exports = db.define(
   },
   {
     hooks: {
-      beforeCreate: product => {
-        product.price = Number(product.price);
-        product.discountPercentage = Number(product.discountPercentage);
-        if (product.discountPercentage) {
-          product.onSale = true;
-          product.salePrice = (
-            (product.price * (100 - product.discountPercentage)) /
-            100
-          ).toFixed(2);
-        } else {
-          product.price = product.price.toFixed(2);
+      beforeSave: product => {
+        product.onSale = product.discountPercentage > 0;
+        if (product.onSale) {
+          product.salePrice = product.price * ((100 - product.discountPercentage) / 100);
+        }else{
           product.salePrice = product.price;
         }
       }
