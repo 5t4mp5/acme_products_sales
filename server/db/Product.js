@@ -31,7 +31,7 @@ module.exports = db.define(
   },
   {
     hooks: {
-      beforeSave: product => {
+      beforeCreate: product => {
         product.price = Number(product.price);
         product.discountPercentage = Number(product.discountPercentage);
         if (product.discountPercentage) {

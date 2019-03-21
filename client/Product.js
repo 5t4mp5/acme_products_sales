@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 const Product = ({ product, remove }) => {
   const { id, name, price, salePrice, onSale, availability } = product;
@@ -10,9 +9,7 @@ const Product = ({ product, remove }) => {
   };
   return (
     <li className="list-group-item" key={id}>
-      <Link to={`/Products/${product.id}`} key={product.id}>
-        {name}
-      </Link>
+      {name}
       <br />
       <span style={onSale ? { textDecoration: "line-through" } : {}}>
         ${price.toFixed(2)}
@@ -30,13 +27,7 @@ const Product = ({ product, remove }) => {
         </span>
       </div>
       <br />
-      <button
-        type="button"
-        className="btn btn-danger"
-        onClick={() => remove(product)}
-      >
-        Delete
-      </button>
+      <button type="button" className="btn btn-danger" onClick={() => remove(product)}>Delete</button>
     </li>
   );
 };

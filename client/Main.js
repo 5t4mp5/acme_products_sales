@@ -10,7 +10,6 @@ import Navbar from "./Navbar";
 import Home from "./Home";
 import Products from "./Products";
 import CreateProduct from "./CreateProduct";
-import UpdateProduct from "./UpdateProduct";
 import Message from "./Message";
 import DisabledOption from "./DisabledOption";
 
@@ -66,16 +65,6 @@ class Main extends Component {
       return newProduct;
     });
   };
-  updateProduct = product => {
-    return axios
-      .put(`/api/products/${product.id}`, product)
-      .then(() => axios.get("/api/products"))
-      .then(products => this.setState({ products: products.data }))
-      .then(() => this.updateDisplayProducts())
-      .catch(e =>
-        this.setState({ message: <Message type="danger" text={e.message} /> })
-      );
-  };
   resetMessage = () => {
     this.setState({ message: "" });
   };
@@ -92,14 +81,11 @@ class Main extends Component {
         <Router>
           <Route
             render={({ location }) => (
-              <Navbar
-                products={this.state.displayProducts}
-                location={location}
-              />
+              <Navbar products={this.state.displayProducts} location={location} />
             )}
           />
           <Route
-            exact path="(/Products|/Sales)"
+            path="(/Products|/Sales)"
             render={() => (
               <DisabledOption
                 showDisabled={this.state.showDisabled}
@@ -109,15 +95,6 @@ class Main extends Component {
           />
           <Switch>
             <Route path="/Home" component={Home} />
-            <Route
-              path="/Products/:id"
-              render={({ match }) => (
-                <UpdateProduct
-                  match={match}
-                  updateProduct={this.updateProduct}
-                />
-              )}
-            />
             <Route
               path="/Products"
               render={() => (

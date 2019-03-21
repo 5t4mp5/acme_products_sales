@@ -170,8 +170,7 @@ class CreateProduct extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       message: message,
       handleChange: this.handleChange,
       handleNumField: this.handleNumField,
-      handleSubmit: this.handleSubmit,
-      buttonName: "Create"
+      handleSubmit: this.handleSubmit
     });
   }
 }
@@ -253,10 +252,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Home__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Home */ "./client/Home.js");
 /* harmony import */ var _Products__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Products */ "./client/Products.js");
 /* harmony import */ var _CreateProduct__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CreateProduct */ "./client/CreateProduct.js");
-/* harmony import */ var _UpdateProduct__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./UpdateProduct */ "./client/UpdateProduct.js");
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Message */ "./client/Message.js");
-/* harmony import */ var _DisabledOption__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./DisabledOption */ "./client/DisabledOption.js");
-
+/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Message */ "./client/Message.js");
+/* harmony import */ var _DisabledOption__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./DisabledOption */ "./client/DisabledOption.js");
 
 
 
@@ -288,7 +285,7 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           products: this.state.products.filter(product => product.id !== id)
         });
         this.updateDisplayProducts();
-      }).catch(e => this.setState({ message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_8__["default"], { type: "danger", text: e.message }) }));
+      }).catch(e => this.setState({ message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_7__["default"], { type: "danger", text: e.message }) }));
     };
 
     this.addProduct = product => {
@@ -297,10 +294,6 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         this.updateDisplayProducts(this.state.products);
         return newProduct;
       });
-    };
-
-    this.updateProduct = product => {
-      return axios__WEBPACK_IMPORTED_MODULE_2___default.a.put(`/api/products/${product.id}`, product).then(() => axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/products")).then(products => this.setState({ products: products.data })).then(() => this.updateDisplayProducts()).catch(e => this.setState({ message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_8__["default"], { type: "danger", text: e.message }) }));
     };
 
     this.resetMessage = () => {
@@ -324,7 +317,7 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/products").then(products => {
       this.setState({ products: products.data });
       this.updateDisplayProducts(products.data);
-    }).catch(e => this.setState({ message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_8__["default"], { type: "danger", text: e.message }) }));
+    }).catch(e => this.setState({ message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_7__["default"], { type: "danger", text: e.message }) }));
   }
 
   render() {
@@ -340,14 +333,11 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         react_router_dom__WEBPACK_IMPORTED_MODULE_1__["HashRouter"],
         null,
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-          render: ({ location }) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Navbar__WEBPACK_IMPORTED_MODULE_3__["default"], {
-            products: this.state.displayProducts,
-            location: location
-          })
+          render: ({ location }) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Navbar__WEBPACK_IMPORTED_MODULE_3__["default"], { products: this.state.displayProducts, location: location })
         }),
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-          exact: true, path: "(/Products|/Sales)",
-          render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_DisabledOption__WEBPACK_IMPORTED_MODULE_9__["default"], {
+          path: "(/Products|/Sales)",
+          render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_DisabledOption__WEBPACK_IMPORTED_MODULE_8__["default"], {
             showDisabled: this.state.showDisabled,
             toggle: this.toggleShowDisabled
           })
@@ -356,13 +346,6 @@ class Main extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
           react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"],
           null,
           react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], { path: "/Home", component: _Home__WEBPACK_IMPORTED_MODULE_4__["default"] }),
-          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
-            path: "/Products/:id",
-            render: ({ match }) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_UpdateProduct__WEBPACK_IMPORTED_MODULE_7__["default"], {
-              match: match,
-              updateProduct: this.updateProduct
-            })
-          }),
           react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
             path: "/Products",
             render: () => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Products__WEBPACK_IMPORTED_MODULE_5__["default"], {
@@ -491,8 +474,6 @@ const Navbar = ({ products, location }) => {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-
 
 
 const Product = ({ product, remove }) => {
@@ -505,11 +486,7 @@ const Product = ({ product, remove }) => {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
     "li",
     { className: "list-group-item", key: id },
-    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-      react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"],
-      { to: `/Products/${product.id}`, key: product.id },
-      name
-    ),
+    name,
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null),
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
       "span",
@@ -539,11 +516,7 @@ const Product = ({ product, remove }) => {
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null),
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
       "button",
-      {
-        type: "button",
-        className: "btn btn-danger",
-        onClick: () => remove(product)
-      },
+      { type: "button", className: "btn btn-danger", onClick: () => remove(product) },
       "Delete"
     )
   );
@@ -574,8 +547,7 @@ const ProductForm = ({
   message,
   handleNumField,
   handleChange,
-  handleSubmit,
-  buttonName
+  handleSubmit
 }) => {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
     "form",
@@ -669,7 +641,7 @@ const ProductForm = ({
         style: { marginTop: "10px" },
         disabled: !name || !price
       },
-      buttonName
+      "Create"
     ),
     message
   );
@@ -707,112 +679,6 @@ const Products = ({ products, remove }) => {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Products);
-
-/***/ }),
-
-/***/ "./client/UpdateProduct.js":
-/*!*********************************!*\
-  !*** ./client/UpdateProduct.js ***!
-  \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Message__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Message */ "./client/Message.js");
-/* harmony import */ var _ProductForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ProductForm */ "./client/ProductForm.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
-
-
-
-
-
-class UpdateProduct extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
-  constructor() {
-    super();
-
-    this.handleNumField = evt => {
-      const isNum = /^[0-9.\b]+$/;
-      if (isNum.test(evt.target.value) || evt.target.value === "") {
-        this.handleChange(evt);
-      }
-    };
-
-    this.handleChange = evt => {
-      if (this.state.message) this.setState({ message: "" });
-      this.setState({ [evt.target.name]: evt.target.value });
-    };
-
-    this.handleSubmit = evt => {
-      const updateProduct = this.props.updateProduct;
-      evt.preventDefault();
-      updateProduct(this.state).then(() => {
-        const name = this.state.name;
-        this.setState({
-          message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_1__["default"], {
-            type: "success",
-            text: `${name} Updated!`,
-            resetMessage: this.resetMessage
-          })
-        });
-      }).catch(e => this.setState({
-        message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          type: "danger",
-          text: e.message,
-          resetMessage: this.resetMessage
-        })
-      }));
-    };
-
-    this.resetMessage = () => {
-      this.setState({ message: "" });
-    };
-
-    this.state = {
-      id: "",
-      name: "",
-      price: "",
-      discountPercentage: "",
-      availability: "instock",
-      message: ""
-    };
-  }
-  componentDidMount() {
-    axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(`/api/products/${this.props.match.params.id}`).then(product => this.setState(product.data)).catch(e => this.setState({
-      message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Message__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        type: "danger",
-        text: e.message,
-        resetMessage: this.resetMessage
-      })
-    }));
-  }
-
-  render() {
-    const {
-      name,
-      price,
-      discountPercentage,
-      availability,
-      message
-    } = this.state;
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ProductForm__WEBPACK_IMPORTED_MODULE_2__["default"], {
-      name: name,
-      price: price,
-      discountPercentage: discountPercentage,
-      availability: availability,
-      message: message,
-      handleChange: this.handleChange,
-      handleNumField: this.handleNumField,
-      handleSubmit: this.handleSubmit,
-      buttonName: "Update"
-    });
-  }
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (UpdateProduct);
 
 /***/ }),
 

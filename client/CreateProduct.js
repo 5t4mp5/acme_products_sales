@@ -75,7 +75,6 @@ class CreateProduct extends Component {
         handleChange={this.handleChange}
         handleNumField={this.handleNumField}
         handleSubmit={this.handleSubmit}
-        buttonName="Create"
       />
     );
   }
