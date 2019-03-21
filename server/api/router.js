@@ -13,9 +13,15 @@ router.post("/products", (req, res, next) => {
     name,
     price,
     discountPercentage,
-    availability,
+    availability
   })
     .then(product => res.status(201).json(product))
+    .catch(next);
+});
+
+router.put("/products/:id", (req, res, next) => {
+  Product.update(req.body, { where: { id: req.params.id * 1 } })
+    .then(product => res.json(product))
     .catch(next);
 });
 

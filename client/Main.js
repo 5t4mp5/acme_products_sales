@@ -10,6 +10,7 @@ import Navbar from "./Navbar";
 import Home from "./Home";
 import Products from "./Products";
 import CreateProduct from "./CreateProduct";
+import UpdateProduct from "./UpdateProduct";
 import Message from "./Message";
 import DisabledOption from "./DisabledOption";
 
@@ -61,9 +62,22 @@ class Main extends Component {
   addProduct = product => {
     return axios.post("/api/products", product).then(newProduct => {
       this.setState({ products: [...this.state.products, newProduct.data] });
-      this.updateDisplayProducts(this.state.products);
+      this.updateDisplayProducts();
       return newProduct;
     });
+  };
+  updateProduct = product => {
+    return axios
+      .put(`/api/products/${product.id}`, product)
+      .then(() => axios.get("/api/products"))
+      .then(products => {
+        this.setState({ products: products.data });
+        this.updateDisplayProducts();
+        return products.data.find(_product => _product.id === product.id);
+      })
+      .catch(e =>
+        this.setState({ message: <Message type="danger" text={e.message} /> })
+      );
   };
   resetMessage = () => {
     this.setState({ message: "" });
@@ -81,7 +95,10 @@ class Main extends Component {
         <Router>
           <Route
             render={({ location }) => (
-              <Navbar products={this.state.displayProducts} location={location} />
+              <Navbar
+                products={this.state.displayProducts}
+                location={location}
+              />
             )}
           />
           <Route
@@ -95,6 +112,16 @@ class Main extends Component {
           />
           <Switch>
             <Route path="/Home" component={Home} />
+            <Route
+              path="/Products/:id"
+              render={({ match }) => (
+                <UpdateProduct
+                  products={this.state.products}
+                  match={match}
+                  updateProduct={this.updateProduct}
+                />
+              )}
+            />
             <Route
               path="/Products"
               render={() => (

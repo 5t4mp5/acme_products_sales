@@ -2,16 +2,21 @@ import React, { Component } from "react";
 import Message from "./Message";
 import ProductForm from "./ProductForm";
 
-class CreateProduct extends Component {
+class UpdateProduct extends Component {
   constructor() {
     super();
     this.state = {
       name: "",
       price: "",
       discountPercentage: "",
-      availability: "instock",
+      availability: "",
       message: ""
     };
+  }
+  componentDidMount() {
+    const id = this.props.match.params.id;
+    const _product = this.props.products.find(product => product.id === id * 1);
+    this.setState(_product);
   }
   handleNumField = evt => {
     const isNum = /^[0-9.\b]+$/;
@@ -25,18 +30,14 @@ class CreateProduct extends Component {
   };
   handleSubmit = evt => {
     evt.preventDefault();
-    const addProduct = this.props.addProduct;
-    addProduct(this.state)
+    const updateProduct = this.props.updateProduct;
+    updateProduct(this.state)
       .then(product =>
         this.setState({
-          name: "",
-          price: "",
-          discountPercentage: "",
-          availability: "instock",
           message: (
             <Message
               type="success"
-              text={`${product.data.name} Created!`}
+              text={`${product.name} Updated!`}
               resetMessage={this.resetMessage}
             />
           )
@@ -75,10 +76,10 @@ class CreateProduct extends Component {
         handleChange={this.handleChange}
         handleNumField={this.handleNumField}
         handleSubmit={this.handleSubmit}
-        buttonName="Create"
+        buttonName="Update"
       />
     );
   }
 }
 
-export default CreateProduct;
+export default UpdateProduct;

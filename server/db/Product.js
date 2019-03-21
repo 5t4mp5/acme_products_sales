@@ -31,7 +31,7 @@ module.exports = db.define(
   },
   {
     hooks: {
-      beforeSave: product => {
+      beforeValidate: product => {
         product.onSale = product.discountPercentage > 0;
         if (product.onSale) {
           product.salePrice = product.price * ((100 - product.discountPercentage) / 100);
